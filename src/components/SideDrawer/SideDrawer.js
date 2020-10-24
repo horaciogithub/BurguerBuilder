@@ -1,9 +1,10 @@
 import React from "react";
-import Auxiliary from "../../hoc/Auxiliary";
+import Auxiliary from "../../hoc/Auxiliary/Auxiliary";
 import Logo from "../Logo/Logo";
 import NavigationItems from "../Navigation/NavigationItems/NavigationItems";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import classes from "./SideDrawer.css";
+import PropTypes from "prop-types";
 
 const SideDrawer = (props) => {
   let attachedClasses = [classes.SideDrawer, classes.Close];
@@ -28,3 +29,8 @@ const SideDrawer = (props) => {
 };
 
 export default SideDrawer;
+
+SideDrawer.propTypes = {
+  open: PropTypes.bool.isRequired,
+  closed: PropTypes.func.isRequired
+}

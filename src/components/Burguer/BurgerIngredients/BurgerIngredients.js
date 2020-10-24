@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Auxiliary from "../../../hoc/Auxiliary";
 import classes from "./BurgerIngredient.css";
 import PropTypes from "prop-types";
+import Auxiliary from "../../../hoc/Auxiliary/Auxiliary";
 
 class BurgerIngredient extends Component {
   render() {

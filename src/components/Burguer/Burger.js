@@ -1,6 +1,7 @@
 import React from "react";
 import BurgerIngredient from "./BurgerIngredients/BurgerIngredients";
 import classes from "./Burger.css";
+import PropTypes from "prop-types";
 
 const Burger = (props) => {
 
@@ -26,3 +27,8 @@ const Burger = (props) => {
 };
 
 export default Burger;
+
+
+Burger.propTypes = {
+  ingredients: PropTypes.object
+}
