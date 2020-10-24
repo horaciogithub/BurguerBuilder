@@ -11,7 +11,7 @@ const Modal = (props) => {
 
   return (
     <Auxiliary>
-      <BackDrop show={show} hideModal={hideModal}/>
+      <BackDrop show={show} clicked={hideModal}/>
       <div className={classNames(classes.Modal, dropClasse)}>
         {props.children}
       </div>
