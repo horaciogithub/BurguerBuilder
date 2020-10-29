@@ -6,17 +6,6 @@ import Auxiliary from "../../../hoc/Auxiliary/Auxiliary";
 
 class Modal extends Component {
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.show !== this.props.show || nextProps.children !== this.props.children) {
-      return true;
-    }
-  }
-
-  componentWillUpdate () {
-    console.log('Modal will update');
-    
-  }
-
   render() {
     const { show, hideModal } = this.props;
 
