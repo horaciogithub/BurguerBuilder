@@ -5,6 +5,7 @@ import classes from "./ContactData.css";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
+import { connect } from "react-redux";
 
 function inputConfig(elementType, inputType, elementPlaceholder, validation, valid) {
   return {
@@ -93,7 +94,7 @@ class ContactData extends Component {
     }
 
     const orders = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
     };
@@ -133,7 +134,7 @@ class ContactData extends Component {
             />
           );
         })}
-        <Button btnType="Success" disabled={!this.state.formIsValid} >Order</Button>
+        <Button btntype="Success" disabled={!this.state.formIsValid} >Order</Button>
       </form>
     );
 
@@ -150,4 +151,11 @@ class ContactData extends Component {
   }
 }
 
-export default withRouter(ContactData);
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(ContactData));

@@ -27,10 +27,10 @@ const OrderSumary = (props) => {
         <strong>Total price: {totalPrice} €</strong>
       </p>
       <p>Continue to checkout?</p>
-      <Button btnType="Danger" clicked={purchaseCancelled}>
+      <Button btntype="Danger" clicked={purchaseCancelled}>
         Cancel
       </Button>
-      <Button btnType="Success" clicked={purchaseContinued}>
+      <Button btntype="Success" clicked={purchaseContinued}>
         Continue
       </Button>
     </Auxiliary>
