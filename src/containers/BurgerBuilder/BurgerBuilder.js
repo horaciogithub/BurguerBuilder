@@ -8,14 +8,17 @@ import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
-import * as ActionTypes from "../../store/actions";
+import * as burguerBuilderActions from "../../store/actions";
 
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
-    loading: false,
-    error: false,
   };
+
+  componentDidMount () {
+    console.log(this.props);
+    this.props.onInitiIngredients();
+  }
 
   updatePurchaseState(ingredients) {
     var updatedIngredients = Object.values(ingredients);
@@ -38,7 +41,7 @@ class BurgerBuilder extends Component {
     }
 
     let orderSumary = <Spinner />;
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <p style={{ textAlign: "center", padding: "20px" }}>
         Ingredients don´t loaded!{" "}
       </p>
@@ -73,8 +76,6 @@ class BurgerBuilder extends Component {
       );
     }
 
-    if (this.state.loading) orderSumary = <Spinner />;
-
     return (
       <Auxiliary>
         <Modal
@@ -93,21 +94,15 @@ const mapStateToProps = (state) => {
   return {
     ings: state.ingredients,
     price: state.totalPrice,
+    error: state.error
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onIngredientAdded: (ingredient) =>
-      dispatch({
-        type: ActionTypes.ADD_INGREDIENT,
-        ingredientName: ingredient,
-      }),
-    onIngredientDeleted: (ingredient) =>
-      dispatch({
-        type: ActionTypes.REMOVE_INGREDIENT,
-        ingredientName: ingredient,
-      }),
+    onIngredientAdded:   (name) => dispatch(burguerBuilderActions.addIngredient(name)),
+    onIngredientDeleted: (name) => dispatch(burguerBuilderActions.removeIngredient(name)),
+    onInitiIngredients:  ()     => dispatch(burguerBuilderActions.initIngredients())
   };
 };
 
