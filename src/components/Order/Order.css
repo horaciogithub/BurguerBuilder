@@ -12,20 +12,36 @@
   margin: 5px;
   padding: 5px;
   border: 1px solid grey;
+  border-radius: 5px;
 }
 
-.IngredientsBox .Meat {
-    background-color: red;
+.IngredientsBox::first-letter {
+  text-transform: uppercase;
 }
 
-.IngredientsBox .Cheese {
-    background-color: yellow;
+.IngredientsText {
+  text-transform: capitalize;
+  font-weight: bold;
 }
 
-.IngredientsBox .Salad {
-    background-color: green;
+.Meat {
+  background: linear-gradient(#7f3608, #702e05);
+  border-color: #7f3608;
+  color: white;
 }
 
-.IngredientsBox .Bacon {
-    background-color: orange;
+.Cheese {
+  background: linear-gradient(#f4d004, #d6bb22);
+  border-color: #f4d004;
+}
+
+.Salad {
+  background: linear-gradient(#228c1d, #91ce50);
+  border-color: #228c1d;
+}
+
+.Bacon {
+  background: linear-gradient(#bf3813, #c45e38);
+  border-color: #bf3813;
+  color: white;
 }

@@ -4,6 +4,7 @@ const initialState = {
     error: false,
     orders: [],
     loading: false,
+    purchased: false
 }
 
 export default initialState;
