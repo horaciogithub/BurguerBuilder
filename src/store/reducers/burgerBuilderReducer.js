@@ -11,6 +11,7 @@ function addIngredient (state, action) {
     },
     totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
     error: false,
+    building: true
   });
 }
 
@@ -22,6 +23,7 @@ function removeIngredient (state, action) {
     },
     totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
     error: false,
+    building: true
   });
 }
 
@@ -35,10 +37,11 @@ function setIngredients (state, action) {
     },
     totalPrice: 4,
     error: false,
+    building: false
   });
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState.ingredientsData, action) => {
   switch (action.type) {
     case ActionTypes.ADD_INGREDIENT:
      return addIngredient(state, action);

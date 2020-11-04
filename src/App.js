@@ -2,28 +2,31 @@ import React, { Component } from "react";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
 import Layout from "./hoc/Layout/Layout";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import Orders from "./containers/Orders/Orders";
+import Auth from "./containers/Auth/Auth";
+import Logout from "./containers/Auth/Logout/Logout";
+import * as actions from './store/actions'
+import { connect } from "react-redux";
 
 class App extends Component {
-  state = {
-    show: true,
-  };
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ show: false });
-    }, 5000);
+    this.props.onTryAutoSignUp()
   }
 
   render() {
+    
     return (
       <div>
         <Layout>
           <Switch>
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/orders" component={Orders} />
+            {this.props.isAuthenticated && <Route path="/checkout" component={Checkout} />}
+            {this.props.isAuthenticated && <Route path="/orders" component={Orders} />}
+            <Route exact path="/auth" component={Auth} />
+            <Route exact path="/logout" component={Logout} />
             <Route exact path="/" component={BurgerBuilder} />
+            {!this.props.isAuthenticated && <Redirect to="/" />}
           </Switch>
         </Layout>
       </div>
@@ -31,4 +34,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTryAutoSignUp: () => dispatch(actions.authCheckState()),
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

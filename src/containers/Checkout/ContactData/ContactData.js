@@ -7,26 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import * as orderActions from "../../../store/actions"
-
-function inputConfig(
-  elementType,
-  inputType,
-  elementPlaceholder,
-  validation,
-  valid
-) {
-  return {
-    elementType: elementType,
-    elementConfig: {
-      type: inputType,
-      placeholder: elementPlaceholder,
-    },
-    value: "",
-    validation: validation,
-    valid: valid,
-    touched: false,
-  };
-}
+import { checkValidity, formElements, inputConfig } from "../../../utils.js/formUtils";
 
 class ContactData extends Component {
   state = {
@@ -76,29 +57,11 @@ class ContactData extends Component {
     formIsValid: false,
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-
-    if (rules && rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    if (rules && rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules && rules.maxLength) {
-      isValid = value.length <= rules.minLength && isValid;
-    }
-
-    return isValid;
-  }
-
   inputChangeHandler = (e, inputIdentifier) => {
     const updatedOrderForm = { ...this.state.ordersForm };
     const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
     updatedFormElement.value = e.target.value;
-    updatedFormElement.valid = this.checkValidity(
+    updatedFormElement.valid = checkValidity(
       updatedFormElement.value,
       updatedFormElement.validation
     );
@@ -126,25 +89,21 @@ class ContactData extends Component {
       ].value;
     }
 
-    const orders = {
+    const order = {
       ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
+      userId: this.props.userId
     };
 
-    this.props.onOrderBuger(orders)
+    this.props.onOrderBuger(order, this.props.token)
 
     this.props.history.push("/");
   };
 
   render() {
     const formElementsArray = [];
-    for (const key in this.state.ordersForm) {
-      formElementsArray.push({
-        id: key,
-        config: this.state.ordersForm[key],
-      });
-    }
+    formElements(formElementsArray, this.state.ordersForm);
 
     let contactData = (
       <form onSubmit={this.orderHandler}>
@@ -187,13 +146,15 @@ const mapStateToProps = (state) => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOrderBuger: (orderData) => dispatch(orderActions.purchaseBurger(orderData)),
+    onOrderBuger: (orderData, token) => dispatch(orderActions.purchaseBurger(orderData, token)),
   };
 };
 

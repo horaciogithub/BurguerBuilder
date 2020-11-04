@@ -13,12 +13,12 @@ export const purchaseBurgerFailed = (error) => { return { type: ActionTypes.PURC
 export const purchaseBurgerStart  = ()      => { return { type: ActionTypes.PURCHASE_BURGER_START                } };
 export const purchaseInit         = ()      => { return { type: ActionTypes.PURCHASE_INIT                        } };
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
   return (dispatch) => {
     dispatch(purchaseBurgerStart());
 
     axios
-      .post("/orders.json", orderData)
+      .post(`/orders.json?auth=${token}`, orderData)
       .then((response) => {
         console.log(response.data);
 
@@ -34,12 +34,14 @@ export const fetchOrdersSuccess = (orders) => { return { type: ActionTypes.FETCH
 export const fetchOrdersFailed  = (error)  => { return { type: ActionTypes.FETCH_ORDERS_FAILED,  error:  error  } };
 export const fetchOrdersStart   = ()       => { return { type: ActionTypes.FETCH_ORDERS_START                   } };
 
-export const fetchOrders = () => { 
+export const fetchOrders = (token, userId) => { 
   return (dispatch) => {
     dispatch(fetchOrdersStart());
 
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`
+
     axios
-      .get("/orders.json")
+      .get(`/orders.json${queryParams}`)
       .then((response) => {
         let fetchedOrders = [];
 

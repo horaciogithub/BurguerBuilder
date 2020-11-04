@@ -14,7 +14,7 @@ function purchaseBurgerSuccess (state, action) {
   });
 }
 
-const orderReducer = (state = initialState, action) => {
+const orderReducer = (state = initialState.orderData, action) => {
   switch (action.type) {
     case ActionTypes.PURCHASE_BURGER_SUCCESS:
       return purchaseBurgerSuccess(state, action);

@@ -9,6 +9,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
+import { Redirect } from "react-router-dom";
 
 class BurgerBuilder extends Component {
   state = {
@@ -27,6 +28,15 @@ class BurgerBuilder extends Component {
   purchaseContinueHandler = () => {
     this.props.onInitPurchase();
     this.props.history.push({ pathname: "/checkout" });
+  };
+  
+  purchaseHandler = () => {
+    if (this.props.isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.onSetRedirectPath('/checkout')
+      this.props.history.push('/auth')
+    }
   };
 
   render() {
@@ -64,9 +74,8 @@ class BurgerBuilder extends Component {
             disabled={disabledInfo}
             price={this.props.price.toFixed(2)}
             purchasable={this.updatePurchaseState(this.props.ings)}
-            ordered={() => {
-              this.setState({ purchasing: true });
-            }}
+            isAuth={this.props.isAuthenticated}
+            ordered={this.purchaseHandler}
           />
         </Auxiliary>
       );
@@ -90,7 +99,8 @@ const mapStateToProps = (state) => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    isAuthenticated: state.auth.token !== null,
   };
 };
 
@@ -100,6 +110,7 @@ const mapDispatchToProps = (dispatch) => {
     onIngredientDeleted: (name) => dispatch(actions.removeIngredient(name)),
     onInitiIngredients:  ()     => dispatch(actions.initIngredients()),
     onInitPurchase:      ()     => dispatch(actions.purchaseInit()),
+    onSetRedirectPath:   (path) => dispatch(actions.setAuthRedirectPath(path))
   };
 };
 
