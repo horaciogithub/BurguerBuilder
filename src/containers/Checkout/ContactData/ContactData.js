@@ -7,7 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import * as orderActions from "../../../store/actions"
-import { checkValidity, formElements, inputConfig } from "../../../utils.js/formUtils";
+import { checkValidity, formElements, inputConfig } from "../../../utils/formUtils";
 
 class ContactData extends Component {
   state = {
@@ -89,14 +89,13 @@ class ContactData extends Component {
       ].value;
     }
 
-    const order = {
+    const orders = {
       ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
-      userId: this.props.userId
     };
 
-    this.props.onOrderBuger(order, this.props.token)
+    this.props.onOrderBuger(orders, this.props.token)
 
     this.props.history.push("/");
   };
@@ -147,8 +146,7 @@ const mapStateToProps = (state) => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
-    token: state.auth.token,
-    userId: state.auth.userId
+    token: state.auth.token
   };
 };
 

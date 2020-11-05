@@ -1,6 +1,6 @@
 import * as ActionTypes from "./actionTypes";
 import axios from "axios";
-import { errorHandler } from "../../utils.js/errorHandlers";
+import { errorHandler } from "../../utils/errorHandlers";
 
 export const authStart = () => ({ type: ActionTypes.AUTH_START });
 

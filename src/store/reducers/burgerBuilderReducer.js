@@ -1,7 +1,7 @@
 import initialState from "../initialState";
 import * as ActionTypes from "../actions/actionTypes";
 import { INGREDIENT_PRICES } from "../../constants/ingredientsPrices";
-import { updateObject } from "../utitlity";
+import { updateObject } from "../../utils/utils";
 
 function addIngredient (state, action) {
   return updateObject(...state, {

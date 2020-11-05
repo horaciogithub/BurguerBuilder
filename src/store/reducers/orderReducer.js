@@ -1,6 +1,6 @@
 import initialState from "../initialState";
 import * as ActionTypes from "../actions/actionTypes";
-import { updateObject } from "../utitlity";
+import { updateObject } from "../../utils/utils";
 
 function purchaseBurgerSuccess (state, action) {
   const newOrder = {
@@ -32,7 +32,7 @@ const orderReducer = (state = initialState.orderData, action) => {
       return updateObject(...state, { orders: action.orders, loading: false });
 
     case ActionTypes.FETCH_ORDERS_FAILED:
-      return updateObject(...state, { loading: false });
+      return updateObject(...state, { loading: true });
     default:
       return state;
   }

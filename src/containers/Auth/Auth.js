@@ -5,7 +5,7 @@ import {
   checkValidity,
   formElements,
   inputConfig,
-} from "../../utils.js/formUtils";
+} from "../../utils/formUtils";
 import * as actions from "../../store/actions";
 import classes from "./Auth.css";
 import { connect } from "react-redux";
@@ -37,7 +37,7 @@ class Auth extends Component {
 
   componentDidMount() {
     if (!this.props.buildingBurger && this.props.authRedirectPath !== "/") {
-      this.props.onSetAuthRedirectPath()
+      this.props.onSetAuthRedirectPath();
     }
   }
 
@@ -58,12 +58,14 @@ class Auth extends Component {
   };
 
   submitHandler = (e) => {
-    e.preventDefault(),
-      this.props.onAuth(
-        this.state.controls.email.value,
-        this.state.controls.password.value,
-        this.state.isSignup
-      );
+    e.preventDefault();
+
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value,
+      this.state.isSignup
+    );
+    
   };
 
   render() {
@@ -130,8 +132,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/checkout")),
+    onAuth: (email, password, isSignup) =>
+      dispatch(actions.auth(email, password, isSignup)),
+    onSetAuthRedirectPath: () =>
+      dispatch(actions.setAuthRedirectPath("/checkout")),
   };
 };
 

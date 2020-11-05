@@ -23,8 +23,8 @@ class App extends Component {
           <Switch>
             {this.props.isAuthenticated && <Route path="/checkout" component={Checkout} />}
             {this.props.isAuthenticated && <Route path="/orders" component={Orders} />}
-            <Route exact path="/auth" component={Auth} />
             <Route exact path="/logout" component={Logout} />
+            <Route exact path="/auth" component={Auth} />
             <Route exact path="/" component={BurgerBuilder} />
             {!this.props.isAuthenticated && <Redirect to="/" />}
           </Switch>
