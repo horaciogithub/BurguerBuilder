@@ -20,19 +20,19 @@ const orderReducer = (state = initialState.orderData, action) => {
       return purchaseBurgerSuccess(state, action);
       
     case ActionTypes.PURCHASE_BURGER_FAILED:
-      return updateObject(...state, { loading: false });
+      return updateObject(state, { loading: false });
 
     case ActionTypes.PURCHASE_BURGER_START:
-      return updateObject(...state, { loading: true });
+      return updateObject(state, { loading: true });
 
     case ActionTypes.FETCH_ORDERS_START:
-      return updateObject(...state, { loading: true });
+      return updateObject(state, { loading: true });
 
     case ActionTypes.FETCH_ORDERS_SUCCESS:
-      return updateObject(...state, { orders: action.orders, loading: false });
+      return updateObject(state, { orders: action.orders, loading: false });
 
     case ActionTypes.FETCH_ORDERS_FAILED:
-      return updateObject(...state, { loading: true });
+      return updateObject(state, { loading: true });
     default:
       return state;
   }
